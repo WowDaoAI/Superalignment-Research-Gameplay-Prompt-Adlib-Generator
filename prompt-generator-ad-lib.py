@@ -1,6 +1,7 @@
 import json
 import random
 import os
+import pandas as pd  # Import pandas for CSV handling
 
 # Define the directory containing the JSON files
 PROMPT_DIR = './prompts/'
@@ -65,10 +66,22 @@ def save_prompt_to_file(prompt, filename):
 
 # Main function to generate and save multiple prompts
 def main(num_prompts=5):
+    prompts_list = []  # List to hold prompts and filenames for CSV
     for i in range(num_prompts):
         prompt = generate_gameplay_prompt()
-        print(f"Generated Prompt {i + 1}: {json.dumps(prompt, indent=4)}")  # Print the generated prompt
-        save_prompt_to_file(prompt, f'./prompts/variations_of_default/gameplay_prompt_{i+1}.json')
+        prompt_json = json.dumps(prompt, indent=4)  # Convert prompt to JSON string
+        filename = f'gameplay_prompt_{i + 1}.json'
+        
+        print(f"Generated Prompt {i + 1}: {prompt_json}")  # Print the generated prompt
+        save_prompt_to_file(prompt, f'prompts/variations_of_default/{filename}')
+        
+        # Append the prompt and filename to the list
+        prompts_list.append({"prompt": prompt_json, "filename": filename})
+
+    # Create a DataFrame and save to CSV
+    df = pd.DataFrame(prompts_list)
+    df.to_csv('gameplay_prompts.csv', index=False)  # Save DataFrame to CSV
+    print("All gameplay prompts have been saved to gameplay_prompts.csv.")
 
 if __name__ == "__main__":
-    main(10)  # Generate 10 new gameplay prompts
+    main(10)  # Generate new gameplay prompts (pass in different number to generate more or less prompts)

@@ -50,11 +50,6 @@ def generate_gameplay_prompt():
                 "content": output_message
             }
         ],
-        "temperature": 0.9,
-        "max_tokens": 384,
-        "top_p": 0.95,
-        "frequency_penalty": 0,
-        "presence_penalty": 0
     }
 
     return prompt

@@ -31,7 +31,6 @@ def generate_gameplay_prompt():
     output_message = random.choice(pressure)['messages'][3]['content']
 
     prompt = {
-        "model": "gpt-4-0613",
         "messages": [
             {
                 "role": "system",
